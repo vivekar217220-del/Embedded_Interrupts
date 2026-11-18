@@ -1,61 +1,21 @@
-# Embedded_Interrupts
-AVR Interrupt-Based LED &amp; Buzzer Control using ATmega2560 — Demonstrates maskable interrupt (INT0) and Non-maskable Interrupt , startup behavior, and real-time hardware interaction with LEDs and buzzer.
+# AVR Interrupts · LED and Buzzer Demo
 
-## 🚀 Features
-- 🔄 Startup sequence triggered by RESET (Non-Maskable Interrupt concept)
-- ⚡ External interrupt handling using INT0 (Maskable Interrupt)
-- 💡 LED indication for different system states
-- 🔊 Buzzer alert during interrupt handling
-- 🔁 Continuous LED blinking during normal operation
+An ATmega2560 demonstration of external interrupts, GPIO outputs, and startup behavior. Two LEDs and a buzzer make each execution path visible.
 
-## 🧠 Concepts Covered
-- Maskable Interrupts (INT0)
-- Non-Maskable Interrupt (Reset behavior)
-- Interrupt Service Routine (ISR)
-- Embedded C for AVR Microcontrollers
-- GPIO configuration and control
+![AVR interrupt demo](<Screenshot 2026-03-23 205834.png>)
 
-## 🔌 Hardware Used
-- ATmega2560 Microcontroller
-- LEDs (2x)
-- Buzzer
-- Push Button (INT0)
-- Reset Push Button (for Non-Maskable behavior)
-- Resistors
+[Watch the demo](<Screen Recording 2026-03-23 204832.mp4>)
 
-## ⚙️ Working
-### 🔹 Non-Maskable Interrupt (RESET)
-- When the reset button is pressed:
-  - MCU restarts immediately
-  - Startup sequence runs (LEDs + buzzer blink)
-  - Cannot be disabled (Non-Maskable behavior)
+| Event | Observable behavior |
+| --- | --- |
+| Normal operation | LED1 blinks while the main loop runs. |
+| INT0 push button | The interrupt service routine turns on LED2 and activates the buzzer for about one second. |
+| RESET push button | The MCU restarts and runs the LED and buzzer startup sequence. |
 
-### 🔹 Maskable Interrupt (INT0)
-- When INT0 button is pressed:
-  - Interrupt is triggered (can be enabled/disabled)
-  - LED2 turns ON
-  - Buzzer activates for 1 second
-  - System resumes normal operation
+INT0 is a maskable external interrupt. RESET restarts execution through the reset vector.
 
-### 🔹 Normal Operation
-- LED1 continuously blinks indicating system is running
+## Hardware and tools
 
-## 🛠️ Tools & Environment
-- AVR-GCC Compiler
-- Atmel Studio / Microchip Studio / VS Code
-- Proteus (for simulation)
+ATmega2560 · Two LEDs · Buzzer · Two push buttons · Resistors · AVR-GCC · Proteus
 
-## 📷 Applications
-- Learning interrupt systems in embedded programming
-- Understanding real-time hardware interaction
-- Academic projects and demonstrations
-
-## Simple Definations :-
-- There are Two types of the Interrupts one is Maskable and another is the Non - Maskable.
-- Maskable Interrupt :- Means those interrupt which are Ignored for Such time Being by the Programmer like we Do here we use the spst Push button at PD0 and Learned Functionality of the Maskable Interrupt.
-- Non - Maskable Interrupt :- Means those type of the Interrupts which is not ignored and must be Passed in the CPU. and we Learn this one using the Reset Functionality.
-
-## 📌 Author
-Vivek Chaudhary 
-
-
+**Author** · Vivek Chaudhary
