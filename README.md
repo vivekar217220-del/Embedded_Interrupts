@@ -14,6 +14,10 @@ An ATmega2560 demonstration of external interrupts, GPIO outputs, and startup be
 
 INT0 is a maskable external interrupt. RESET restarts execution through the reset vector.
 
+## Verification in the demo
+
+Observe the normal blink first. Trigger INT0 and watch for the brief LED and buzzer response, then press RESET to see the startup sequence repeat.
+
 ## Hardware and tools
 
 ATmega2560 · Two LEDs · Buzzer · Two push buttons · Resistors · AVR-GCC · Proteus
