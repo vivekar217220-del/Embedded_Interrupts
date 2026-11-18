@@ -1,25 +1,52 @@
-# AVR Interrupts · LED and Buzzer Demo
+# AVR Interrupts | ATmega2560 LED and Buzzer Demo
 
-An ATmega2560 demonstration of external interrupts, GPIO outputs, and startup behavior. Two LEDs and a buzzer make each execution path visible.
+A Proteus demonstration of how an ATmega2560 responds to a button on its external interrupt input. Two LEDs and a buzzer make the startup routine, the main loop, and interrupt handling visible.
 
-![AVR interrupt demo](<Screenshot 2026-03-23 205834.png>)
+![Proteus circuit for the AVR interrupt demonstration](<Screenshot 2026-03-23 205834.png>)
 
-[Watch the demo](<Screen Recording 2026-03-23 204832.mp4>)
+[Watch the simulation recording](<Screen Recording 2026-03-23 204832.mp4>)
 
-| Event | Observable behavior |
+## What the circuit demonstrates
+
+| Input or output | Role |
 | --- | --- |
-| Normal operation | LED1 blinks while the main loop runs. |
-| INT0 push button | The interrupt service routine turns on LED2 and activates the buzzer for about one second. |
-| RESET push button | The MCU restarts and runs the LED and buzzer startup sequence. |
+| ATmega2560 | Runs the startup code, main loop, and external interrupt service routine. |
+| INT0 push button | Sends a request through the maskable external interrupt input. The project notes identify PD0 as the input. |
+| RESET push button | Restarts execution through the reset vector. |
+| LED1 | Blinks during normal operation to make progress through the main loop visible. |
+| LED2 and buzzer | Provide visible and audible feedback during the INT0 event. |
 
-INT0 is a maskable external interrupt. RESET restarts execution through the reset vector.
+## Execution flow
 
-## Verification in the demo
+```text
+Power-on or RESET ── Startup indication ── Main loop: LED1 blinks
+                                             │
+                                            INT0
+                                             ▼
+                                   ISR: LED2 and buzzer
+                                             │
+                                             └── Return to the main loop
+```
 
-Observe the normal blink first. Trigger INT0 and watch for the brief LED and buzzer response, then press RESET to see the startup sequence repeat.
+### Startup and normal operation
 
-## Hardware and tools
+At startup, the demo runs an LED and buzzer sequence. The application then enters its repeating LED1 blink loop. Pressing the reset button repeats initialization through the reset vector.
 
-ATmega2560 · Two LEDs · Buzzer · Two push buttons · Resistors · AVR-GCC · Proteus
+### External interrupt
+
+When INT0 and global interrupts are enabled, a configured event on the INT0 pin causes the processor to enter its interrupt service routine (ISR). In this demonstration the ISR turns on LED2 and activates the buzzer for roughly one second. The main loop resumes when the handler completes.
+
+An interrupt request uses the configured interrupt vector and can be masked. A reset restarts execution through the reset vector, so the visible startup sequence starts over.
+
+## How to review the demonstration
+
+1. Observe the startup indication, then look for the repeating LED1 blink.
+2. Trigger INT0 during the normal blink. Check for LED2 and buzzer activity, then look for LED1 operation to resume.
+3. Trigger RESET and compare the response with the initial power-on sequence.
+4. Use the schematic screenshot to identify the two independent button inputs and the assigned outputs.
+
+## Tools and project material
+
+The documented setup uses the ATmega2560, two push buttons, two LEDs, resistors, and a buzzer in Proteus. The original notes list AVR-GCC as the toolchain for Embedded C. This repository provides the circuit screenshot and demonstration recording. A reproducible build would also require the source, the Proteus project, and the interrupt trigger configuration.
 
 **Author** · Vivek Chaudhary
