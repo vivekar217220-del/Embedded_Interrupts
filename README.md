@@ -1,61 +1,52 @@
-# Embedded_Interrupts
-AVR Interrupt-Based LED &amp; Buzzer Control using ATmega2560 — Demonstrates maskable interrupt (INT0) and Non-maskable Interrupt , startup behavior, and real-time hardware interaction with LEDs and buzzer.
+# AVR Interrupts | ATmega2560 LED and Buzzer Demo
 
-## 🚀 Features
-- 🔄 Startup sequence triggered by RESET (Non-Maskable Interrupt concept)
-- ⚡ External interrupt handling using INT0 (Maskable Interrupt)
-- 💡 LED indication for different system states
-- 🔊 Buzzer alert during interrupt handling
-- 🔁 Continuous LED blinking during normal operation
+A Proteus demonstration of how an ATmega2560 responds to a button on its external interrupt input. Two LEDs and a buzzer make the startup routine, the main loop, and interrupt handling visible.
 
-## 🧠 Concepts Covered
-- Maskable Interrupts (INT0)
-- Non-Maskable Interrupt (Reset behavior)
-- Interrupt Service Routine (ISR)
-- Embedded C for AVR Microcontrollers
-- GPIO configuration and control
+![Proteus circuit for the AVR interrupt demonstration](<Screenshot 2026-03-23 205834.png>)
 
-## 🔌 Hardware Used
-- ATmega2560 Microcontroller
-- LEDs (2x)
-- Buzzer
-- Push Button (INT0)
-- Reset Push Button (for Non-Maskable behavior)
-- Resistors
+[Watch the simulation recording](<Screen Recording 2026-03-23 204832.mp4>)
 
-## ⚙️ Working
-### 🔹 Non-Maskable Interrupt (RESET)
-- When the reset button is pressed:
-  - MCU restarts immediately
-  - Startup sequence runs (LEDs + buzzer blink)
-  - Cannot be disabled (Non-Maskable behavior)
+## What the circuit demonstrates
 
-### 🔹 Maskable Interrupt (INT0)
-- When INT0 button is pressed:
-  - Interrupt is triggered (can be enabled/disabled)
-  - LED2 turns ON
-  - Buzzer activates for 1 second
-  - System resumes normal operation
+| Input or output | Role |
+| --- | --- |
+| ATmega2560 | Runs the startup code, main loop, and external interrupt service routine. |
+| INT0 push button | Sends a request through the maskable external interrupt input. The project notes identify PD0 as the input. |
+| RESET push button | Restarts execution through the reset vector. |
+| LED1 | Blinks during normal operation to make progress through the main loop visible. |
+| LED2 and buzzer | Provide visible and audible feedback during the INT0 event. |
 
-### 🔹 Normal Operation
-- LED1 continuously blinks indicating system is running
+## Execution flow
 
-## 🛠️ Tools & Environment
-- AVR-GCC Compiler
-- Atmel Studio / Microchip Studio / VS Code
-- Proteus (for simulation)
+```text
+Power-on or RESET ── Startup indication ── Main loop: LED1 blinks
+                                             │
+                                            INT0
+                                             ▼
+                                   ISR: LED2 and buzzer
+                                             │
+                                             └── Return to the main loop
+```
 
-## 📷 Applications
-- Learning interrupt systems in embedded programming
-- Understanding real-time hardware interaction
-- Academic projects and demonstrations
+### Startup and normal operation
 
-## Simple Definations :-
-- There are Two types of the Interrupts one is Maskable and another is the Non - Maskable.
-- Maskable Interrupt :- Means those interrupt which are Ignored for Such time Being by the Programmer like we Do here we use the spst Push button at PD0 and Learned Functionality of the Maskable Interrupt.
-- Non - Maskable Interrupt :- Means those type of the Interrupts which is not ignored and must be Passed in the CPU. and we Learn this one using the Reset Functionality.
+At startup, the demo runs an LED and buzzer sequence. The application then enters its repeating LED1 blink loop. Pressing the reset button repeats initialization through the reset vector.
 
-## 📌 Author
-Vivek Chaudhary 
+### External interrupt
 
+When INT0 and global interrupts are enabled, a configured event on the INT0 pin causes the processor to enter its interrupt service routine (ISR). In this demonstration the ISR turns on LED2 and activates the buzzer for roughly one second. The main loop resumes when the handler completes.
 
+An interrupt request uses the configured interrupt vector and can be masked. A reset restarts execution through the reset vector, so the visible startup sequence starts over.
+
+## How to review the demonstration
+
+1. Observe the startup indication, then look for the repeating LED1 blink.
+2. Trigger INT0 during the normal blink. Check for LED2 and buzzer activity, then look for LED1 operation to resume.
+3. Trigger RESET and compare the response with the initial power-on sequence.
+4. Use the schematic screenshot to identify the two independent button inputs and the assigned outputs.
+
+## Tools and project material
+
+The documented setup uses the ATmega2560, two push buttons, two LEDs, resistors, and a buzzer in Proteus. The original notes list AVR-GCC as the toolchain for Embedded C. This repository provides the circuit screenshot and demonstration recording. A reproducible build would also require the source, the Proteus project, and the interrupt trigger configuration.
+
+**Author** · Vivek Chaudhary
